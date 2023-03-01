@@ -1,0 +1,40 @@
+<!-- success.html -->
+<html>
+  <head>
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      
+      .card {
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 5px #ccc;
+        padding: 20px;
+        text-align: center;
+        width: 400px;
+      }
+      
+      h1 {
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+      
+      p {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card">
+        <h1>Success!</h1>
+        <p>{{s.name}} , Your pharmacy appointment has been assigned successfully.</p>
+        <p>Your assigned pharmacy is: {{ ph.name }}</p>
+      </div>
+    </div>
+  </body>
+</html>

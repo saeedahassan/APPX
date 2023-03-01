@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>AAU - Pharmacy Training</title>
+  </head>  
+  <body>
+  <form method="post">
+    <div class="card">
+      <img style="width:35%;margin-left: 32%;" src="{% static "l2 (3).jpg" %}">
+    </div>
+    <br>
+      <div class="card">
+        <h1 style="text-align: center;">Updates Regarding Training</h1>
+      <br>
+      <p>Dear students,</p>
+      <br>
+      <p>We are excited to inform you that it is now time to select your preferred training sites for your upcoming training program. We would like to inform you that the selection process will follow a first come first serve system, and will be based on capacities provided by the training sites. Therefore, we encourage you to make your selections as early as possible to secure your preferred site. Please note that the selection process will consider the training sites’ location sites. We understand that commuting can be a significant factor in your decision-making process, and we hope that the locations provided will be near to you and will help you make the preferred sites that are accessible to you.</p>
+      <br>
+      <p>In the event that you are unable to make a selection before the deadline, the College of pharmacy staff in charge of distribution will assign you a site based on availability. Please keep in mind that their decision will be final.</p>
+      <br>
+      <p>We have provided below a list of training sites and their respective capacities to assist you in making your selection. Please review this list carefully and select your preferred training site as soon as possible.</p>
+      <br>
+      <p>Thank you for your cooperation, and we wish you all the best in your upcoming training program.</p>
+      <br>
+      <p>Sincerely,</p>
+      <br>
+      <p>Training Distribution Team</p>
+      </div>
+      <br>
+      {% csrf_token %}
+      <label for="student_id">Student ID<input type="text" name="student_id"></label>
+      <label for="preferred_area">Preferred Area
+        <select name="preferred_area">
+        {% for p in pharmacies %}
+              {% for s in shifts %}
+                {% if s.pharmacy.name == p.name %}
+                  {% if s.max_capacity > 0 %}
+                  <option value="{{p.area}}">{{p.area }}</option> 
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+          {% endfor %}  
+        </select>
+      </label>
+      <label for="preferred_start_time">Preferred Start Time
+      <select name="preferred_start_time">
+
+          {% for s in shifts %}
+              {% if s.max_capacity > 0 %}
+              <option value="{{ s.start_time }}">{{s.pharmacy.name}} - {{s.start_time }}</option> 
+              {% endif %}
+          {% endfor %}
+      </select>
+      </label>
+      <input type="submit" value="Submit">
+  </form>
+  <style>
+      form {
+        width: 60%;
+        margin: 50px auto;
+        padding: 30px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        align-items: center;
+        align-self: center;
+        align-content: center;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      input[type="text"], select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        background-color: lightsalmon;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      input[type="submit"]:hover {
+        background-color: darksalmon;
+      }
+  </style>
+  </body>
+  </html>

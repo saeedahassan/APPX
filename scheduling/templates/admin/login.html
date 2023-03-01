@@ -1,0 +1,78 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static tailwind_tags%}
+
+{% block extrastyle %}{{ block.super }}
+{{ form.media }}
+{% endblock %}
+{% tailwind_preload_css %}
+{% tailwind_css %}
+{% block bodyclass %}{{ block.super }} login here{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+
+{% block content %}
+  <div class="card border-double border-solid content-auto lg:content-visible">
+  
+    <img style="margin-left: 40%;" src="{% static 'admin/l.jpg' %}" alt="logo"/>  
+
+    {% if form.errors and not form.non_field_errors %}
+    <p class="errornote">
+    {% if form.errors.items|length == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
+    </p>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+    <p class="errornote">
+        {{ error }}
+    </p>
+    {% endfor %}
+    {% endif %}
+
+    <div class="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div class="w-full max-w-md space-y-8">
+        {% if user.is_authenticated %}
+        <p class="errornote">
+        {% blocktranslate trimmed %}
+            You are authenticated as {{ username }}, but are not authorized to
+            access this page. Would you like to login to a different account?
+        {% endblocktranslate %}
+        </p>
+        {% endif %}
+
+        <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+          <div class="form-row ">
+            {{ form.username.errors }}
+            {{ form.username.label_tag }} {{ form.username }}
+          </div>
+          </br>
+          <div class="form-row">
+            {{ form.password.errors }}
+            {{ form.password.label_tag }} {{ form.password }}
+            <input type="hidden" name="next" value="{{ next }}">
+          </div>
+          {% url 'admin_password_reset' as password_reset_url %}
+          {% if password_reset_url %}
+          </br>
+          <div class="password-reset-link">
+            <a href="{{ password_reset_url }}">{% translate 'Forgotten your password or username?' %}</a>
+          </div>
+          {% endif %}
+        </br>
+          <div class="submit-row">
+            <input style="margin-left: 20%;" class="mx-auto button bg-red-500" type="submit" value="{% translate 'Log in Here' %}">
+          </div>
+        </form>
+        </div>
+    </div>
+  </div>
+{% endblock %}
