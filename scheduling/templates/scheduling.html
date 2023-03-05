@@ -31,31 +31,17 @@
       <br>
       {% csrf_token %}
       <label for="student_id">Student ID<input type="text" name="student_id"></label>
-      <label for="preferred_area">Preferred Area
-        <select name="preferred_area">
-        {% for p in pharmacies %}
-              {% for s in shifts %}
-                {% if s.pharmacy.name == p.name %}
-                  {% if s.max_capacity > 0 %}
-                  <option value="{{p.area}}">{{p.area }}</option> 
-                  {% endif %}
-                {% endif %}
-              {% endfor %}
-          {% endfor %}  
-        </select>
-      </label>
-      <label for="preferred_start_time">Preferred Start Time
-      <select name="preferred_start_time">
-
-          {% for s in shifts %}
-              {% if s.max_capacity > 0 %}
-              <option value="{{ s.start_time }}">{{s.pharmacy.name}} - {{s.start_time }}</option> 
-              {% endif %}
-          {% endfor %}
-      </select>
-      </label>
-      <input type="submit" value="Submit">
-  </form>
+              <label for="preferred_start_time">Preferred Pharmacy & Time Period
+              <select name="preferred_start_time">
+                  {% for s in shifts %}
+                      {% if s.capacity < s.max_capacity %}
+                      <option value="{{ s.start_time }}">{{s.pharmacy.name}} - {{s.start_time }} to {{s.end_time}}</option> 
+                      {% endif %}
+                  {% endfor %}
+              </select>
+              </label>
+              <input type="submit" value="Submit">
+    </form>
   <style>
       form {
         width: 60%;

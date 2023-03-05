@@ -21,7 +21,7 @@ aau_site.register(Pharmacy,PharmacyAdmin)
 
 
 class ShiftAdmin(admin.ModelAdmin):
-    list_display = ('pharmacy', 'start_time', 'end_time', 'capacity')
+    list_display = ('pharmacy', 'start_time', 'end_time', 'capacity','max_capacity')
 
 
 class StudentAdmin(admin.ModelAdmin):

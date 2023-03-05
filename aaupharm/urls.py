@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from scheduling.views import pharmacy_scheduling, success
+from scheduling.views import pharmacy_scheduling, success, fail
 from scheduling.admin import aau_site
 from django.conf import settings
 from django.conf.urls.static import static
@@ -23,6 +23,7 @@ urlpatterns = [
     path('root/', admin.site.urls),
     path('admin/',aau_site.urls),
     path("scheduling/success",success),
+    path("scheduling/fail",fail),
     path("",pharmacy_scheduling),
     path("__reload__/", include("django_browser_reload.urls")),
 
